@@ -346,8 +346,7 @@ namespace SpriteSlimmer
 
             Bitmap result = ThinAndReorderAnimation(originalImage, rowDivisions, columnDivisions, thinning, outputRows, outputColumns);
 
-            // PictureBoxに表示する
-            pictureBoxPreview.Image = new Bitmap(result);
+            pictureBoxPreview.Image =  PrepareImageWithGridLines(result,outputRows,outputColumns);
 
             // 使用したBitmapをDisposeする
             result.Dispose();
@@ -356,76 +355,102 @@ namespace SpriteSlimmer
 
         private void updatePictureBoxView()
         {
-            // 選択されているアイテムのインデックスを取得
-            if(File.Exists(selectedFilePath) == false)
+            // Check if the selected file exists
+            if (File.Exists(selectedFilePath) == false)
             {
                 return;
             }
 
+            if (comboBoxColumn.SelectedItem == null || comboBoxRow.SelectedItem == null)
+            {
+                return;
+            }
 
-            // 選択された画像を読み込む
+            // Get the number of row and column divisions from the combo boxes
+            int rowDivisions = int.Parse(comboBoxRow.SelectedItem.ToString());
+            int columnDivisions = int.Parse(comboBoxColumn.SelectedItem.ToString());
+
+            // Load the original image
             using (Bitmap originalImage = new Bitmap(selectedFilePath))
             {
-                // 新しいBitmapを作成する（オリジナルの画像と同じサイズ）
-                using (Bitmap newImage = new Bitmap(originalImage.Width, originalImage.Height))
+                // Prepare the image with grid lines and set it as the picture box's image
+                pictureBoxPreview.Image = PrepareImageWithGridLines(originalImage, rowDivisions, columnDivisions);
+            }
+        }
+
+        private Bitmap PrepareImageWithGridLines(Bitmap originalImage, int rowDivisions, int columnDivisions)
+        {
+            // 新しいBitmapを作成する（オリジナルの画像と同じサイズ）
+            using (Bitmap newImage = new Bitmap(originalImage.Width, originalImage.Height))
+            {
+                // オリジナルの画像を新しいBitmapにコピー
+                using (Graphics g = Graphics.FromImage(newImage))
                 {
-                    // オリジナルの画像を新しいBitmapにコピー
-                    using (Graphics g = Graphics.FromImage(newImage))
-                    {
-                        g.DrawImage(originalImage, 0, 0, originalImage.Width, originalImage.Height);
+                    g.DrawImage(originalImage, 0, 0, originalImage.Width, originalImage.Height);
 
-                        if (checkBoxGridLine.Checked &&
-                            comboBoxRow.SelectedItem != null &&
-                            comboBoxColumn.SelectedItem != null &&
-                            int.TryParse(comboBoxRow.SelectedItem.ToString(), out int rowDivisions) && rowDivisions > 0 &&
-                            int.TryParse(comboBoxColumn.SelectedItem.ToString(), out int columnDivisions) && columnDivisions > 0)
-                        {
-                            // 赤いペンを作成（1px）
-                            using (Pen redPen = new Pen(Color.Red, 1))
-                            {
-                                // ヨコに赤線を描画
-                                int rowInterval = newImage.Height / rowDivisions;
-                                for (int i = 0; i < rowDivisions; i++)
-                                {
-                                    g.DrawLine(redPen, 0, i * rowInterval, newImage.Width, i * rowInterval);
-                                }
-                                g.DrawLine(redPen, 0, newImage.Height - 1, newImage.Width, newImage.Height - 1);
+                    // グリッドラインを描画
+                    DrawGridLinesOnImage(newImage, rowDivisions, columnDivisions);
+                }
 
-                                // タテに赤線を描画
-                                int columnInterval = newImage.Width / columnDivisions;
-                                for (int i = 0; i < columnDivisions; i++)
-                                {
-                                    g.DrawLine(redPen, i * columnInterval, 0, i * columnInterval, newImage.Height);
-                                }
-                                g.DrawLine(redPen, newImage.Width - 1, 0, newImage.Width - 1, newImage.Height);
-                            }
-                        }
-                    }
-                    Bitmap resizedImage;
+                // リサイズ
+                Bitmap resizedImage = ResizeImage(newImage);
 
-                    // radioButtonRateHalfにチェックが入っている場合
-                    if (radioButtonRateHalf.Checked)
+                // 新しい画像を返す
+                return (Bitmap)resizedImage.Clone();
+            }
+        }
+
+        private void DrawGridLinesOnImage(Bitmap image, int rowDivisions, int columnDivisions)
+        {
+            using (Graphics g = Graphics.FromImage(image))
+            {
+                // 赤いペンを作成（1px）
+                using (Pen redPen = new Pen(Color.Red, 1))
+                {
+                    // ヨコに赤線を描画
+                    double rowInterval = (double)image.Height / rowDivisions;
+                    for (int i = 0; i <= rowDivisions; i++)
                     {
-                        int newWidth = newImage.Width / 2;
-                        int newHeight = newImage.Height / 2;
-                        resizedImage = new Bitmap(newImage.GetThumbnailImage(newWidth, newHeight, null, IntPtr.Zero));
-                    }
-                    // radioButtonRateQuartにチェックが入っている場合
-                    else if (radioButtonRateQuart.Checked)
-                    {
-                        int newWidth = newImage.Width / 4;
-                        int newHeight = newImage.Height / 4;
-                        resizedImage = new Bitmap(newImage.GetThumbnailImage(newWidth, newHeight, null, IntPtr.Zero));
-                    }
-                    else
-                    {
-                        resizedImage = newImage;
+                        int yPosition = (int)Math.Ceiling(i * rowInterval);
+                        yPosition = Math.Min(yPosition, image.Height - 1); // 端数があったら切り上げて描画
+                        g.DrawLine(redPen, 0, yPosition, image.Width, yPosition);
                     }
 
-                    // プレビューピクチャーボックスに新しい画像を表示
-                    pictureBoxPreview.Image = (Bitmap)resizedImage.Clone();
+                    // タテに赤線を描画
+                    double columnInterval = (double)image.Width / columnDivisions;
+                    for (int i = 0; i <= columnDivisions; i++)
+                    {
+                        int xPosition = (int)Math.Ceiling(i * columnInterval);
+                        xPosition = Math.Min(xPosition, image.Width - 1); // 端数があったら切り上げて描画
+                        g.DrawLine(redPen, xPosition, 0, xPosition, image.Height);
+                    }
                 }
             }
+        }
+
+        private Bitmap ResizeImage(Bitmap image)
+        {
+            Bitmap resizedImage;
+            // radioButtonRateHalfにチェックが入っている場合
+            if (radioButtonRateHalf.Checked)
+            {
+                int newWidth = image.Width / 2;
+                int newHeight = image.Height / 2;
+                resizedImage = new Bitmap(image.GetThumbnailImage(newWidth, newHeight, null, IntPtr.Zero));
+            }
+            // radioButtonRateQuartにチェックが入っている場合
+            else if (radioButtonRateQuart.Checked)
+            {
+                int newWidth = image.Width / 4;
+                int newHeight = image.Height / 4;
+                resizedImage = new Bitmap(image.GetThumbnailImage(newWidth, newHeight, null, IntPtr.Zero));
+            }
+            else
+            {
+                resizedImage = image;
+            }
+
+            return resizedImage;
         }
 
         private void UpdateOutputDevides()
@@ -535,12 +560,16 @@ namespace SpriteSlimmer
             // 選択されたアイテムを数値に変換
             int numberColumn = int.Parse(comboBoxColumn.SelectedItem.ToString());
             int numberRow = int.Parse(comboBoxRow.SelectedItem.ToString());
-            int numberThinning = int.Parse(comboBoxThinning.SelectedItem.ToString());
+            int numberThinning = int.Parse(comboBoxThinning.SelectedItem.ToString())+1;
 
             // コマ数を計算
             int totalCells = numberColumn * numberRow;
-            double cellsDouble = (double)totalCells / (double)numberThinning;
-            int totalThinnedCells = (int)Math.Ceiling(cellsDouble);
+            int totalThinnedCells = totalCells / numberThinning;
+
+            if (totalCells % numberThinning != 0)
+            {
+                totalThinnedCells++;
+            }
 
             labelTotal.Text = "合計コマ数 " + totalThinnedCells.ToString();
             cellsMax = totalThinnedCells;
@@ -549,7 +578,7 @@ namespace SpriteSlimmer
         private void ComboBoxThinning_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateCellsSum();
-
+            CheckOver();
         }
 
         private void NumericUpDownOutputRow_ValueChanged(object sender, EventArgs e)
