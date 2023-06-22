@@ -451,6 +451,7 @@
             this.textBoxTargetPath.Name = "textBoxTargetPath";
             this.textBoxTargetPath.Size = new System.Drawing.Size(185, 19);
             this.textBoxTargetPath.TabIndex = 1;
+            this.textBoxTargetPath.TextChanged += new System.EventHandler(this.textBoxTargetPath_TextChanged);
             // 
             // buttonPreviewOutput
             // 

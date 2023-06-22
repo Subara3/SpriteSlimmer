@@ -168,6 +168,11 @@ namespace SpriteSlimmer
 
         private void ThinOutAndSaveImages()
         {
+            if(!File.Exists(selectedFilePath))
+            {
+                MessageBox.Show("ファイルを指定してください。", "エラー",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                return;
+            }
             // オリジナルの画像を取得
             Bitmap originalImage = new Bitmap(selectedFilePath);
 
@@ -338,6 +343,12 @@ namespace SpriteSlimmer
 
         private void buttonPreviewOutput_Click(object sender, EventArgs e)
         {
+            // Check if the selected file exists
+            if (File.Exists(selectedFilePath) == false)
+            {
+                return;
+            }
+
             // オリジナルの画像を取得
             Bitmap originalImage = new Bitmap(selectedFilePath);
 
@@ -642,6 +653,12 @@ namespace SpriteSlimmer
         private void ButtonOriginalPrev_Click(object sender, EventArgs e)
         {
             updatePictureBoxView();
+        }
+
+        private void textBoxTargetPath_TextChanged(object sender, EventArgs e)
+        {
+            selectedFilePath = textBoxTargetPath.Text;
+            UpdateTextboxFilePath();
         }
     }
 
