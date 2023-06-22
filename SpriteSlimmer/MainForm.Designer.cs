@@ -149,7 +149,7 @@
             this.groupBox5.Location = new System.Drawing.Point(22, 366);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(173, 131);
-            this.groupBox5.TabIndex = 9;
+            this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "プレビュー";
             // 
@@ -161,7 +161,7 @@
             this.groupBox4.Location = new System.Drawing.Point(89, 18);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(68, 98);
-            this.groupBox4.TabIndex = 8;
+            this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "倍率";
             // 
@@ -207,7 +207,7 @@
             this.groupBox1.Location = new System.Drawing.Point(11, 18);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(70, 67);
-            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "背景色";
             // 
@@ -261,7 +261,7 @@
             this.labelError.Location = new System.Drawing.Point(94, 49);
             this.labelError.Name = "labelError";
             this.labelError.Size = new System.Drawing.Size(0, 12);
-            this.labelError.TabIndex = 9;
+            this.labelError.TabIndex = 3;
             // 
             // comboBoxThinning
             // 
@@ -304,7 +304,7 @@
             this.label4.Location = new System.Drawing.Point(17, 125);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(99, 12);
-            this.label4.TabIndex = 7;
+            this.label4.TabIndex = 8;
             this.label4.Text = "出力画像の背景色";
             // 
             // numericUpDownOutputColumn
@@ -317,7 +317,7 @@
             0});
             this.numericUpDownOutputColumn.Name = "numericUpDownOutputColumn";
             this.numericUpDownOutputColumn.Size = new System.Drawing.Size(46, 19);
-            this.numericUpDownOutputColumn.TabIndex = 4;
+            this.numericUpDownOutputColumn.TabIndex = 7;
             this.numericUpDownOutputColumn.Value = new decimal(new int[] {
             1,
             0,
@@ -331,7 +331,7 @@
             this.comboBoxBackground.Location = new System.Drawing.Point(14, 143);
             this.comboBoxBackground.Name = "comboBoxBackground";
             this.comboBoxBackground.Size = new System.Drawing.Size(135, 20);
-            this.comboBoxBackground.TabIndex = 8;
+            this.comboBoxBackground.TabIndex = 9;
             // 
             // numericUpDownOutputRow
             // 
@@ -343,7 +343,7 @@
             0});
             this.numericUpDownOutputRow.Name = "numericUpDownOutputRow";
             this.numericUpDownOutputRow.Size = new System.Drawing.Size(39, 19);
-            this.numericUpDownOutputRow.TabIndex = 6;
+            this.numericUpDownOutputRow.TabIndex = 5;
             this.numericUpDownOutputRow.Value = new decimal(new int[] {
             1,
             0,
@@ -357,7 +357,7 @@
             this.label6.Location = new System.Drawing.Point(62, 97);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(17, 12);
-            this.label6.TabIndex = 5;
+            this.label6.TabIndex = 6;
             this.label6.Text = "×";
             // 
             // label7
@@ -367,7 +367,7 @@
             this.label7.Location = new System.Drawing.Point(15, 72);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(119, 12);
-            this.label7.TabIndex = 3;
+            this.label7.TabIndex = 4;
             this.label7.Text = "タテ×ヨコ/コマ数で指定";
             // 
             // groupBox2
@@ -389,7 +389,7 @@
             this.buttonOriginalPrev.Location = new System.Drawing.Point(126, 75);
             this.buttonOriginalPrev.Name = "buttonOriginalPrev";
             this.buttonOriginalPrev.Size = new System.Drawing.Size(75, 23);
-            this.buttonOriginalPrev.TabIndex = 5;
+            this.buttonOriginalPrev.TabIndex = 4;
             this.buttonOriginalPrev.Text = "プレビュー➡";
             this.buttonOriginalPrev.UseVisualStyleBackColor = true;
             this.buttonOriginalPrev.Click += new System.EventHandler(this.ButtonOriginalPrev_Click);
@@ -440,7 +440,7 @@
             this.checkBoxGridLine.Location = new System.Drawing.Point(6, 97);
             this.checkBoxGridLine.Name = "checkBoxGridLine";
             this.checkBoxGridLine.Size = new System.Drawing.Size(80, 16);
-            this.checkBoxGridLine.TabIndex = 4;
+            this.checkBoxGridLine.TabIndex = 2;
             this.checkBoxGridLine.Text = "グリッド表示";
             this.checkBoxGridLine.UseVisualStyleBackColor = true;
             this.checkBoxGridLine.CheckedChanged += new System.EventHandler(this.CheckBoxGridLine_CheckedChanged);
@@ -464,6 +464,7 @@
             // 
             // MainForm
             // 
+            this.AcceptButton = this.buttonOutput;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(833, 515);
