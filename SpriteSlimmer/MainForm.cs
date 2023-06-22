@@ -343,6 +343,7 @@ namespace SpriteSlimmer
 
         private void buttonPreviewOutput_Click(object sender, EventArgs e)
         {
+
             // Check if the selected file exists
             if (File.Exists(selectedFilePath) == false)
             {
@@ -407,8 +408,11 @@ namespace SpriteSlimmer
                 {
                     g.DrawImage(originalImage, 0, 0, originalImage.Width, originalImage.Height);
 
-                    // グリッドラインを描画
-                    DrawGridLinesOnImage(newImage, rowDivisions, columnDivisions);
+                    if (checkBoxGridLine.Checked)
+                    {
+                        // グリッドラインを描画
+                        DrawGridLinesOnImage(newImage, rowDivisions, columnDivisions);
+                    }
                 }
 
                 // リサイズ
