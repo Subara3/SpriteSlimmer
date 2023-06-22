@@ -145,7 +145,8 @@
             // 
             this.groupBox5.Controls.Add(this.groupBox4);
             this.groupBox5.Controls.Add(this.groupBox1);
-            this.groupBox5.Location = new System.Drawing.Point(22, 367);
+            this.groupBox5.Controls.Add(this.checkBoxGridLine);
+            this.groupBox5.Location = new System.Drawing.Point(22, 366);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(173, 131);
             this.groupBox5.TabIndex = 9;
@@ -376,7 +377,6 @@
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.comboBoxColumn);
             this.groupBox2.Controls.Add(this.comboBoxRow);
-            this.groupBox2.Controls.Add(this.checkBoxGridLine);
             this.groupBox2.Location = new System.Drawing.Point(22, 53);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(242, 115);
@@ -437,7 +437,7 @@
             this.checkBoxGridLine.AutoSize = true;
             this.checkBoxGridLine.Checked = true;
             this.checkBoxGridLine.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxGridLine.Location = new System.Drawing.Point(29, 82);
+            this.checkBoxGridLine.Location = new System.Drawing.Point(6, 97);
             this.checkBoxGridLine.Name = "checkBoxGridLine";
             this.checkBoxGridLine.Size = new System.Drawing.Size(80, 16);
             this.checkBoxGridLine.TabIndex = 4;
@@ -481,6 +481,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox1.ResumeLayout(false);
