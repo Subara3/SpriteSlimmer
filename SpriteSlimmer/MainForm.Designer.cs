@@ -267,6 +267,7 @@
             this.comboBoxThinning.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxThinning.FormattingEnabled = true;
             this.comboBoxThinning.Items.AddRange(new object[] {
+            "0(飛ばさない)",
             "1",
             "2",
             "3",
@@ -274,7 +275,7 @@
             "5"});
             this.comboBoxThinning.Location = new System.Drawing.Point(16, 18);
             this.comboBoxThinning.Name = "comboBoxThinning";
-            this.comboBoxThinning.Size = new System.Drawing.Size(47, 20);
+            this.comboBoxThinning.Size = new System.Drawing.Size(100, 20);
             this.comboBoxThinning.TabIndex = 0;
             this.comboBoxThinning.SelectedIndexChanged += new System.EventHandler(this.ComboBoxThinning_SelectedIndexChanged);
             // 
@@ -290,7 +291,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(73, 22);
+            this.label5.Location = new System.Drawing.Point(124, 21);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(77, 12);
             this.label5.TabIndex = 1;

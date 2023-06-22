@@ -174,10 +174,14 @@ namespace SpriteSlimmer
             // 分割数、間引き数、出力する行・列の数を取得
             int rowDivisions = int.Parse(comboBoxRow.SelectedItem.ToString());
             int columnDivisions = int.Parse(comboBoxColumn.SelectedItem.ToString());
-            int thinning = int.Parse(comboBoxThinning.SelectedItem.ToString())+1;
+            int thinning = comboBoxThinning.SelectedIndex;
             int outputRows = Convert.ToInt32(numericUpDownOutputRow.Value);
             int outputColumns = Convert.ToInt32(numericUpDownOutputColumn.Value);
 
+            if(thinning != 0)
+            {
+                thinning++;
+            }
             // 画像を連結
             Bitmap result = ThinAndReorderAnimation(originalImage, rowDivisions, columnDivisions, thinning, outputRows, outputColumns);
 
@@ -259,8 +263,8 @@ namespace SpriteSlimmer
             {
                 for (int columnIndex = 0; columnIndex < columnDivisions; columnIndex++)
                 {
-                    // thinningごとに処理をスキップ
-                    if ((rowIndex * columnDivisions + columnIndex) % thinning != 0)
+                    // thinningが0でないときのみスキップ処理を行う
+                    if (thinning != 0 && (rowIndex * columnDivisions + columnIndex) % thinning != 0)
                     {
                         continue;
                     }
@@ -340,7 +344,11 @@ namespace SpriteSlimmer
             // 分割数、間引き数、出力する行・列の数を取得
             int rowDivisions = int.Parse(comboBoxRow.SelectedItem.ToString());
             int columnDivisions = int.Parse(comboBoxColumn.SelectedItem.ToString());
-            int thinning = int.Parse(comboBoxThinning.SelectedItem.ToString())+1;
+            int thinning = comboBoxThinning.SelectedIndex;
+            if (thinning != 0)
+            {
+                thinning++;
+            }
             int outputRows = Convert.ToInt32(numericUpDownOutputRow.Value);
             int outputColumns = Convert.ToInt32(numericUpDownOutputColumn.Value);
 
@@ -560,15 +568,27 @@ namespace SpriteSlimmer
             // 選択されたアイテムを数値に変換
             int numberColumn = int.Parse(comboBoxColumn.SelectedItem.ToString());
             int numberRow = int.Parse(comboBoxRow.SelectedItem.ToString());
-            int numberThinning = int.Parse(comboBoxThinning.SelectedItem.ToString())+1;
-
+            int numberThinning = comboBoxThinning.SelectedIndex;
+            if(numberThinning != 0)
+            {
+                numberThinning++;
+            }
             // コマ数を計算
             int totalCells = numberColumn * numberRow;
-            int totalThinnedCells = totalCells / numberThinning;
+            int totalThinnedCells;
 
-            if (totalCells % numberThinning != 0)
+            if (numberThinning != 0)
             {
-                totalThinnedCells++;
+                totalThinnedCells = totalCells / numberThinning;
+
+                if (totalCells % numberThinning != 0)
+                {
+                    totalThinnedCells++;
+                }
+            }
+            else
+            {
+                totalThinnedCells = totalCells;
             }
 
             labelTotal.Text = "合計コマ数 " + totalThinnedCells.ToString();
